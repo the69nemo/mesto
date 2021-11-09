@@ -1,0 +1,11 @@
+.profile__subtitle {
+  padding: 0;
+  margin: 0;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 1.22;
+  color: #FFF;
+  grid-column: 2;
+  grid-row: 2;
+}
