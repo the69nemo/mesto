@@ -1,0 +1,6 @@
+.footer {
+  padding: 0 0 60px;
+  min-width: 880px;
+  display: flex;
+  justify-content: flex-start;
+}
