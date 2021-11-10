@@ -6,9 +6,4 @@
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  /* display: grid;
-  grid-template-columns: minmax(320px, 100%);
-  grid-template-rows: repeat(auto-fit, 100%);
-  justify-items: center;
-  align-items: center;*/
 }
