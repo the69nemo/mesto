@@ -1,0 +1,4 @@
+.profile__avatar-container {
+  padding-right: 30px;
+  flex-shrink: 0;
+}
