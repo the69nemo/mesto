@@ -5,7 +5,12 @@
   font-weight: normal;
   font-size: 18px;
   line-height: 1.22;
-  color: #FFF;
-  grid-column: 1;
-  grid-row: 2;
+  color: #FFFFFF;
+}
+
+@media screen and (max-width: 1024px) {
+  .pprofile__subtitle {
+    font-size: 14px;
+    line-height: 1.21;
+  }
 }
