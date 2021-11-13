@@ -4,6 +4,7 @@
   height: 19px;
   border: 0;
   transition: opacity 0.2s linear;
+  cursor: pointer;
 }
 
 .element__button:hover {

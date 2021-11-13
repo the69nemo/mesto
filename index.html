@@ -27,11 +27,11 @@
         <div class="profile__text-conteiner">
           <div class="profile__name-container">
             <h1 class="profile__name">Жак-Ив Кусто</h1>
-            <button class="profile__button-edit" type="button" value="editButton" aria-label="изменить профиль"></button>
+            <button class="profile__button-edit profile__btn" type="button"></button>
           </div>
           <p class="profile__subtitle">Исследователь океана</p>
         </div>
-        <button class="profile__button-add" type="button" value="addProfileButton" aria-label="добавить профиль"></button>
+        <button class="profile__button-add" type="button"></button>
 
 
       </section>
@@ -43,7 +43,7 @@
           <img class="elemet__image" src="./images/photo_karachaevsk.jpg" alt="фото Карачаевска">
           <div class="element__container">
             <h2 class="element__title">Карачаевск</h2>
-            <button class="element__button" type="button" value="likeButton" aria-label="кнопка 'поставить лайк'"></button>
+            <button class="element__button" type="button"></button>
           </div>
         </article>
 
@@ -51,7 +51,7 @@
           <img class="elemet__image" src="./images/photo_elbrus.jpg" alt="фото Горы Эльбрус">
           <div class="element__container">
             <h2 class="element__title">Гора Эльбрус</h2>
-            <button class="element__button" type="button" value="likeButton" aria-label="кнопка 'поставить лайк'"></button>
+            <button class="element__button" type="button"></button>
           </div>
         </article>
 
@@ -59,7 +59,7 @@
           <img class="elemet__image" src="./images/photo_dombai.jpg" alt="фото турритории Домбай">
           <div class="element__container">
             <h2 class="element__title">Домбай</h2>
-            <button class="element__button" type="button" value="likeButton" aria-label="кнопка 'поставить лайк'"></button>
+            <button class="element__button" type="button"></button>
           </div>
         </article>
 
@@ -67,7 +67,7 @@
           <img class="elemet__image" src="./images/photo_elbrus.jpg" alt="фото Горы Эльбрус">
           <div class="element__container">
             <h2 class="element__title">Гора Эльбрус</h2>
-            <button class="element__button" type="button" value="likeButton" aria-label="кнопка 'поставить лайк'"></button>
+            <button class="element__button" type="button"></button>
           </div>
         </article>
 
@@ -75,7 +75,7 @@
           <img class="elemet__image" src="./images/photo_dombai.jpg" alt="фото турритории Домбай">
           <div class="element__container">
             <h2 class="element__title">Домбай</h2>
-            <button class="element__button" type="button" value="likeButton" aria-label="кнопка 'поставить лайк'"></button>
+            <button class="element__button" type="button"></button>
           </div>
         </article>
 
@@ -83,7 +83,7 @@
           <img class="elemet__image" src="./images/photo_karachaevsk.jpg" alt="фото Карачаевск-Черкессия">
           <div class="element__container">
             <h2 class="element__title">Карачаево-Черкессия</h2>
-            <button class="element__button" type="button" value="likeButton" aria-label="кнопка 'поставить лайк'"></button>
+            <button class="element__button" type="button"></button>
           </div>
         </article>
       </section>
@@ -94,7 +94,18 @@
       <p class="footer__copyrights">&copy;2021 Mesto Russia</p>
     </footer>
 
+    <section class="popup">
+      <form class="popup__content">
+        <h2 class="popup__title">Редактировать профиль</h2>
+        <fieldset class="popup__form">
+          <input type="text" class="popup__form-name">
+          <input type="text" class="popup__form-job">
+        </fieldset>
+        <button class="popup__save-button" type="submit">Сохранить</button>
+        <button class="popup__close-button" type="button"></button>
+      </form>
+    </section>
   </div>
-
+  <script src="./js/script.js"></script>
 </body>
 </html>
