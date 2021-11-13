@@ -17,3 +17,9 @@
 .popup__form-job:focus {
   outline: none;
 }
+
+@media screen and (max-width: 550px) {
+  .popup__form-job {
+    margin-bottom: 45px;
+  }
+}
