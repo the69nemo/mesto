@@ -9,7 +9,7 @@
   border: 2px solid #FFFFFF;
   transition: opacity 0.2s linear;
   margin-left: auto;
-  border-radius: 2pxs;
+  border-radius: 2px;
 }
 
 .profile__button-add:hover {
