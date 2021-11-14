@@ -8,3 +8,10 @@
   color: #545454;
   text-align: left;
 }
+
+@media screen and (max-width: 767px) {
+  .footer__copyrights {
+    font-size: 14px;
+    line-height: 1.22;
+  }
+}
