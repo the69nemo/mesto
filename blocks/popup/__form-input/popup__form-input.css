@@ -1,4 +1,4 @@
-.popup__form-name {
+.popup__form-input {
   box-sizing: border-box;
   width: 100%;
   border: 0;
@@ -11,9 +11,8 @@
   font-size: 14px;
   line-height: 17px;
   color: #000000;
-  margin-bottom: 30px;
 }
 
-.popup__form-name:focus {
+.popup__form-input:focus {
   outline: none;
 }

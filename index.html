@@ -32,60 +32,10 @@
           <p class="profile__subtitle">Исследователь океана</p>
         </div>
         <button class="profile__button-add" type="button"></button>
-
-
       </section>
 
 
       <section class="elements">
-
-        <article class="element">
-          <img class="element__image" src="./images/photo_karachaevsk.jpg" alt="фото Карачаевска">
-          <div class="element__container">
-            <h2 class="element__title">Карачаевск</h2>
-            <button class="element__button" type="button"></button>
-          </div>
-        </article>
-
-        <article class="element">
-          <img class="element__image" src="./images/photo_elbrus.jpg" alt="фото Горы Эльбрус">
-          <div class="element__container">
-            <h2 class="element__title">Гора Эльбрус</h2>
-            <button class="element__button" type="button"></button>
-          </div>
-        </article>
-
-        <article class="element">
-          <img class="element__image" src="./images/photo_dombai.jpg" alt="фото территории Домбай">
-          <div class="element__container">
-            <h2 class="element__title">Домбай</h2>
-            <button class="element__button" type="button"></button>
-          </div>
-        </article>
-
-        <article class="element">
-          <img class="element__image" src="./images/photo_elbrus.jpg" alt="фото Горы Эльбрус">
-          <div class="element__container">
-            <h2 class="element__title">Гора Эльбрус</h2>
-            <button class="element__button" type="button"></button>
-          </div>
-        </article>
-
-        <article class="element">
-          <img class="element__image" src="./images/photo_dombai.jpg" alt="фото территории Домбай">
-          <div class="element__container">
-            <h2 class="element__title">Домбай</h2>
-            <button class="element__button" type="button"></button>
-          </div>
-        </article>
-
-        <article class="element">
-          <img class="element__image" src="./images/photo_karachaevsk.jpg" alt="фото Карачаевск-Черкессии">
-          <div class="element__container">
-            <h2 class="element__title">Карачаево-Черкессия</h2>
-            <button class="element__button" type="button"></button>
-          </div>
-        </article>
       </section>
 
     </main>
@@ -94,17 +44,50 @@
       <p class="footer__copyrights">&copy;2021 Mesto Russia</p>
     </footer>
 
-    <section class="popup">
-      <form class="popup__content">
+    <section class="popup popup__profile">
+      <form class="popup__content profileContent">
         <h2 class="popup__title">Редактировать профиль</h2>
         <fieldset class="popup__form">
-          <input type="text" class="popup__form-name" name="name">
-          <input type="text" class="popup__form-job" name="job">
+          <input type="text" class="popup__form-input popup__form-input_place_first-in-form popup__form-name" name="name">
+          <input type="text" class="popup__form-input popup__form-input_place_second-in-form popup__form-job" name="job">
         </fieldset>
         <button class="popup__save-button" type="submit">Сохранить</button>
         <button class="popup__close-button" type="button"></button>
       </form>
     </section>
+
+    <section class="popup popup__cards">
+      <form class="popup__content addCardsContent">
+        <h2 class="popup__title">Новое место</h2>
+        <fieldset class="popup__form">
+          <input type="text" class="popup__form-input popup__form-input_place_first-in-form popup__form-card-name" placeholder="Название" name="nameCard">
+          <input type="url" class="popup__form-input popup__form-input_place_second-in-form popup__form-card-url" placeholder="Ссылка на картинку" name="cardUrl">
+        </fieldset>
+        <button class="popup__save-button" type="submit">Создать</button>
+        <button class="popup__close-button" type="button"></button>
+      </form>
+    </section>
+
+    <section class="popup popup_image">
+      <figure class="popup__image-content">
+        <img class="popup__picture" src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg" alt="">
+        <figcaption class="popup__figcaption">Байкал</figcaption>
+        <button class="popup__close-button" type="button"></button>
+      </figure>
+    </section>
+
+    <template class="element-template">
+      <article class="element">
+        <img class="element__image" src="" alt="">
+        <div class="element__container">
+          <h2 class="element__title">
+          </h2>
+          <button class="element__button" type="button"></button>
+        </div>
+        <button class="element__trash-box-button" type="button"></button>
+      </article>
+    </template>
+
   </div>
   <script src="./js/script.js"></script>
 </body>
