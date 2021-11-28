@@ -52,6 +52,7 @@ const profileJob = document.querySelector(".profile__subtitle");
 // ищем контейнер для карточек
 const elementsSection = document.querySelector('.elements');
 
+//создаем cards из Template-тегов
 function createCard (card) {
   const elementTemplate = document.querySelector('.element-template').content;
   const cardsElement = elementTemplate.cloneNode(true);
@@ -71,16 +72,20 @@ function createCard (card) {
   return cardsElement;
 };
 
+//добавляем card в контейнер elements
 initialCards.forEach(card => elementsSection.append(createCard(card)));
 
+//открытие popup
 function openPopup (popupName) {
   popupName.classList.add("popup__opened");
 };
 
+//закрытие popup
 function closePopup (popupName) {
   popupName.closest('.popup').classList.remove('popup__opened');
 };
 
+//открытие popup для редактирования данных профиля
 function openPopupProfile() {
   openPopup (popupProfile);
   popupProfile.classList.add("popup__opened");
@@ -88,6 +93,7 @@ function openPopupProfile() {
   formJob.value = profileJob.textContent;
 };
 
+//закрытие popup редактирования профиля и сохранение внесенных данных
 function submitForm (evt) {
   evt.preventDefault();
   profileName.textContent = formName.value;
@@ -95,12 +101,14 @@ function submitForm (evt) {
   closePopup(popupProfile);
 };
 
+//открытие popup для просмотра изображений
 function openPopupImage (evt) {
   openPopup (popupImage);
   pictureInPopupImage.src = evt.target.src;
   figcaptionInPopupImage.textContent =  evt.target.alt;
 };
 
+//создание card на основании введенных данныъ из popup
 function addCard (evt) {
   evt.preventDefault();
   card = {
@@ -113,9 +121,17 @@ function addCard (evt) {
   closePopup(popupCards);
 };
 
-popupCloseButton.addEventListener('click', () => closePopup)
+//обработчик кноки сохранения в popup'е добавления card
 greateButton.addEventListener('click', () => openPopup(popupCards));
+
+//обработчик кнопки открытия popup'а редактирования данных профиля
 editButton.addEventListener('click', openPopupProfile);
+
+//обработчик кнопки сохранения данных профиля
 formProfile.addEventListener('submit', submitForm);
+
+///поиск подходящией кнопки закрытия popup'а и  её обработчик
 closeButtons.forEach (button => button.addEventListener('click', () => closePopup(button)));
+
+//обработчик кнопки сохранения данных добовления card
 formAddCards.addEventListener('submit', addCard);
