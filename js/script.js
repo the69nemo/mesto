@@ -27,8 +27,8 @@ const initialCards = [
 
 // ищем popup элементы
 const editButton = document.querySelector(".profile__btn");
-const popupProfile = document.querySelector(".popup__profile");
-const popupCards = document.querySelector(".popup__cards");
+const popupProfile = document.querySelector(".popup_profile");
+const popupCards = document.querySelector(".popup_cards");
 const popupCloseButton = document.querySelector(".popup__close-button");
 const greateButton = document.querySelector(".profile__button-add");
 const closeButtons = document.querySelectorAll('.popup__close-button');
