@@ -76,19 +76,18 @@ function createCard (card) {
 initialCards.forEach(card => elementsSection.append(createCard(card)));
 
 //открытие popup
-function openPopup (popupName) {
-  popupName.classList.add("popup__opened");
+function openPopup (popup) {
+  popup.classList.add("popup__opened");
 };
 
 //закрытие popup
-function closePopup (popupName) {
-  popupName.closest('.popup').classList.remove('popup__opened');
+function closePopup (popup) {
+  popup.closest('.popup').classList.remove('popup__opened');
 };
 
 //открытие popup для редактирования данных профиля
 function openPopupProfile() {
   openPopup (popupProfile);
-  popupProfile.classList.add("popup__opened");
   formName.value = profileName.textContent;
   formJob.value = profileJob.textContent;
 };
