@@ -36,6 +36,7 @@ const popupImage = document.querySelector('.popup_image');
 const pictureInPopupImage = popupImage.querySelector('.popup__picture');
 const figcaptionInPopupImage = popupImage.querySelector('.popup__figcaption');
 const addCardButton = document.querySelector('.popup__save-button');
+const allPopups = document.querySelectorAll('.popup');
 
 // ищем формы
 const formProfile = document.querySelector(".profileContent");
@@ -120,6 +121,23 @@ function addCard (evt) {
   closePopup(popupCards);
 };
 
+//функция для закрытия popup'а клавишей esc
+function closePopupWithEsc (evt) {
+  const currentPopup = document.querySelector('.popup__opened');
+  if (evt.keyCode == 27) {
+    closePopup(currentPopup);
+  };
+};
+
+//закрытиe popup'a при нажатии на область вне окна popup'а
+allPopups.forEach((popup) => {
+  popup.addEventListener ('click', (evt) => {
+    if (!evt.target.closest('.popup__content')) {
+      closePopup(popup);
+    }
+  });
+});
+
 //обработчик кноки сохранения в popup'е добавления card
 greateButton.addEventListener('click', () => openPopup(popupCards));
 
@@ -134,3 +152,6 @@ closeButtons.forEach (button => button.addEventListener('click', () => closePopu
 
 //обработчик кнопки сохранения данных добовления card
 formAddCards.addEventListener('submit', addCard);
+
+//обработчик закрытия popup при нажатии клавиши esc
+document.addEventListener ('keydown', closePopupWithEsc);
