@@ -29,13 +29,10 @@ const initialCards = [
 const editButton = document.querySelector(".profile__btn");
 const popupProfile = document.querySelector(".popup_profile");
 const popupCards = document.querySelector(".popup_cards");
-const popupCloseButton = document.querySelector(".popup__close-button");
 const greateButton = document.querySelector(".profile__button-add");
-const closeButtons = document.querySelectorAll('.popup__close-button');
 const popupImage = document.querySelector('.popup_image');
 const pictureInPopupImage = popupImage.querySelector('.popup__picture');
 const figcaptionInPopupImage = popupImage.querySelector('.popup__figcaption');
-const addCardButton = document.querySelector('.popup__save-button');
 const allPopups = document.querySelectorAll('.popup');
 
 // ищем формы
@@ -53,9 +50,10 @@ const profileJob = document.querySelector(".profile__subtitle");
 // ищем контейнер для карточек
 const elementsSection = document.querySelector('.elements');
 
+const elementTemplate = document.querySelector('.element-template').content;
+
 //создаем cards из Template-тегов
 function createCard (card) {
-  const elementTemplate = document.querySelector('.element-template').content;
   const cardsElement = elementTemplate.cloneNode(true);
   const deleteCardButton = cardsElement.querySelector('.element__trash-box-button');
   const likeCardButton = cardsElement.querySelector('.element__button');
@@ -79,11 +77,13 @@ initialCards.forEach(card => elementsSection.append(createCard(card)));
 //открытие popup
 function openPopup (popup) {
   popup.classList.add("popup__opened");
+  document.addEventListener ('keydown', closePopupWithEsc);
 };
 
 //закрытие popup
 function closePopup (popup) {
   popup.closest('.popup').classList.remove('popup__opened');
+  document.removeEventListener ('keydown', closePopupWithEsc);
 };
 
 //открытие popup для редактирования данных профиля
@@ -111,32 +111,45 @@ function openPopupImage (evt) {
 //создание card на основании введенных данныъ из popup
 function addCard (evt) {
   evt.preventDefault();
+
+  const addCardButton = popupCards.querySelector('.popup__save-button');
+
   card = {
     name: cardName.value,
     link: cardUrl.value,
   };
+
   elementsSection.prepend(createCard(card));
+
   cardUrl.value = '';
   cardName.value = '';
+
+  addCardButton.setAttribute('disabled', '');
+  addCardButton.classList.add('popup__save-button_disabled');
+
   closePopup(popupCards);
 };
 
 //функция для закрытия popup'а клавишей esc
 function closePopupWithEsc (evt) {
-  const currentPopup = document.querySelector('.popup__opened');
-  if (evt.keyCode == 27) {
+  if (evt.key == "Escape") {
+    const currentPopup = document.querySelector('.popup__opened');
     closePopup(currentPopup);
   };
 };
 
-//закрытиe popup'a при нажатии на область вне окна popup'а
+//закрытиe popup'a при нажатии на область вне окна popup'а и кнопку закрытия
 allPopups.forEach((popup) => {
   popup.addEventListener ('click', (evt) => {
-    if (!evt.target.closest('.popup__content')) {
+    if (evt.target.classList.contains('popup__opened')) {
       closePopup(popup);
-    }
+    };
+    if (evt.target.classList.contains('popup__close-button')) {
+      closePopup(popup);
+    };
   });
 });
+
 
 //обработчик кноки сохранения в popup'е добавления card
 greateButton.addEventListener('click', () => openPopup(popupCards));
@@ -147,11 +160,5 @@ editButton.addEventListener('click', openPopupProfile);
 //обработчик кнопки сохранения данных профиля
 formProfile.addEventListener('submit', submitForm);
 
-///поиск подходящией кнопки закрытия popup'а и  её обработчик
-closeButtons.forEach (button => button.addEventListener('click', () => closePopup(button)));
-
 //обработчик кнопки сохранения данных добовления card
 formAddCards.addEventListener('submit', addCard);
-
-//обработчик закрытия popup при нажатии клавиши esc
-document.addEventListener ('keydown', closePopupWithEsc);
