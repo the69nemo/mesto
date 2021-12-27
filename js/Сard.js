@@ -25,8 +25,8 @@ class Card {
       evt.target.classList.toggle('element__button_active');
     });
 
-    this._element.querySelector('.element__image').addEventListener('click', () => {
-      openPopupImage();
+    this._element.querySelector('.element__image').addEventListener('click', (evt) => {
+      openPopupImage(evt);
     });
   }
 
