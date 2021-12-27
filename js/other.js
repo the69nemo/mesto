@@ -68,6 +68,7 @@ function openPopupImage (evt) {
   openPopup (popupImage);
   pictureInPopupImage.src = evt.target.src;
   figcaptionInPopupImage.textContent =  evt.target.alt;
+  pictureInPopupImage.alt = evt.target.alt;
 };
 
 //функция для закрытия popup'а клавишей esc
