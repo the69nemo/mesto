@@ -1,4 +1,4 @@
-import { popupImage, pictureInPopupImage, figcaptionInPopupImage, openPopup } from "./other.js";
+import { openPopupImage } from "./other.js";
 
 class Card {
   constructor (object, selector) {
@@ -16,13 +16,6 @@ class Card {
     return cardsElement;
   }
 
-  _handleOpenPopupImage () {
-    openPopup (popupImage);
-    pictureInPopupImage.src = this._link;
-    figcaptionInPopupImage.textContent =  this._name;
-    pictureInPopupImage.alt = this._name;
-  }
-
   _addListeners () {
     this._trash.addEventListener('click', (evt) => {
       evt.target.closest('.element').remove();
@@ -33,7 +26,7 @@ class Card {
     });
 
     this._element.querySelector('.element__image').addEventListener('click', () => {
-      this._handleOpenPopupImage();
+      openPopupImage();
     });
   }
 

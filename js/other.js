@@ -34,6 +34,7 @@ const popupImage = document.querySelector('.popup_image');
 const pictureInPopupImage = popupImage.querySelector('.popup__picture');
 const figcaptionInPopupImage = popupImage.querySelector('.popup__figcaption');
 const allPopups = document.querySelectorAll('.popup');
+const addCardButton = popupCards.querySelector('.popup__save-button');
 
 // ищем формы
 const formProfile = document.querySelector(".profileContent");
@@ -63,6 +64,12 @@ function closePopup (popup) {
   document.removeEventListener ('keydown', closePopupWithEsc);
 };
 
+function openPopupImage (evt) {
+  openPopup (popupImage);
+  pictureInPopupImage.src = evt.target.src;
+  figcaptionInPopupImage.textContent =  evt.target.alt;
+};
+
 //функция для закрытия popup'а клавишей esc
 function closePopupWithEsc (evt) {
   if (evt.key == "Escape") {
@@ -77,6 +84,7 @@ export {
   popupProfile,
   popupCards,
   greateButton,
+  addCardButton,
   popupImage,
   pictureInPopupImage,
   figcaptionInPopupImage,
@@ -94,5 +102,6 @@ export {
   closePopup,
   closePopupWithEsc,
   openPopup,
+  openPopupImage,
 }
 

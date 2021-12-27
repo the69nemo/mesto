@@ -18,6 +18,7 @@ import {
   closePopup,
   closePopupWithEsc,
   openPopup,
+  addCardButton,
 } from './other.js';
 
 import { Card } from './Сard.js';
@@ -43,18 +44,28 @@ initialCards.forEach((item) => {
   const card = new Card(item, '.element-template');
   const cardsElement = card.generateCard();
 
-  document.querySelector('.elements').append(cardsElement);
+  handleAddCardInARow(elementsSection, 'append', cardsElement);
 });
+
+//функция добавления карточиек в разметку
+function handleAddCardInARow (section, method, object) {
+  if (method === 'append') {
+    return section.append(object);
+  } else if (method === 'prepend'){
+    return section.prepend(object);
+  }
+}
 
 //открытие popup для редактирования данных профиля
 function openPopupProfile() {
   openPopup (popupProfile);
   formName.value = profileName.textContent;
   formJob.value = profileJob.textContent;
+  formProfileValidation.resetValidation();
 };
 
 //закрытие popup редактирования профиля и сохранение внесенных данных
-function submitForm (evt) {
+function submitProfileForm (evt) {
   evt.preventDefault();
   profileName.textContent = formName.value;
   profileJob.textContent = formJob.value;
@@ -65,14 +76,12 @@ function submitForm (evt) {
 function addCard (evt) {
   evt.preventDefault();
 
-  const addCardButton = popupCards.querySelector('.popup__save-button');
-
   const cardObject = new Card ({
     name: cardName.value,
     link: cardUrl.value,
   }, '.element-template');
 
-  elementsSection.prepend(cardObject.generateCard());
+  handleAddCardInARow(elementsSection, 'prepend', cardObject.generateCard());
 
   cardUrl.value = '';
   cardName.value = '';
@@ -104,7 +113,7 @@ greateButton.addEventListener('click', () => openPopup(popupCards));
 editButton.addEventListener('click', openPopupProfile);
 
 //обработчик кнопки сохранения данных профиля
-formProfile.addEventListener('submit', submitForm);
+formProfile.addEventListener('submit', submitProfileForm);
 
 //обработчик кнопки сохранения данных добовления card
 formAddCards.addEventListener('submit', addCard);
