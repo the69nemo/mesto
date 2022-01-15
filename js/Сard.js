@@ -1,10 +1,11 @@
-import { openPopupImage } from "./other.js";
+// import { openPopupImage } from "./other.js";
 
 class Card {
-  constructor (object, selector) {
+  constructor ({object, selector, popupWithImage}) {
     this._name = object.name;
     this._link = object.link;
     this._selector = selector;
+    this._popup = popupWithImage;
   }
 
   _getTemplate() {
@@ -25,8 +26,8 @@ class Card {
       evt.target.classList.toggle('element__button_active');
     });
 
-    this._element.querySelector('.element__image').addEventListener('click', (evt) => {
-      openPopupImage(evt);
+    this._element.querySelector('.element__image').addEventListener('click', () => {
+      this._popup();
     });
   }
 

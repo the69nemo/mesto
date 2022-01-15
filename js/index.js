@@ -4,8 +4,8 @@ import {
   popupProfile,
   popupCards,
   greateButton,
-  allPopups,
   formProfile,
+  formProfiles,
   formAddCards,
   formName,
   formJob,
@@ -14,16 +14,24 @@ import {
   profileName,
   profileJob,
   elementsSection,
-  elementTemplate,
-  closePopup,
-  closePopupWithEsc,
-  openPopup,
   addCardButton,
+  popupImage,
+  elementsTemplate,
 } from './other.js';
 
 import { Card } from './Сard.js';
 
 import { FormValidator } from './FormValidator.js';
+
+import { Section } from './Section.js';
+
+import { Popup } from './Popup.js';
+
+import { PopupWithImage } from './PopupWithImage.js';
+
+import { PopupWithForm } from './PopupWithForm.js';
+
+import { UserInfo } from './UserInfo.js';
 
 const dataValidation = ({
   inputSelector: '.popup__form-input',
@@ -39,13 +47,34 @@ const formProfileValidation = new FormValidator(dataValidation, formProfile);
 addFormValidation.enableValidation();
 formProfileValidation.enableValidation();
 
-//Создание Cards
-initialCards.forEach((item) => {
-  const card = new Card(item, '.element-template');
-  const cardsElement = card.generateCard();
+const submitProfileHandler = (values) => {
+  userInfo.setUserInfo(values)
+};
 
-  handleAddCardInARow(elementsSection, 'append', cardsElement);
-});
+const userInfo = new UserInfo({profileName, profileJob});
+const addCardPopup = new Popup(popupCards);
+const popupWithImage = new PopupWithImage(popupImage);
+const popupWithForm = new PopupWithForm(formProfiles, submitProfileHandler)
+
+const newOneCard = (item) => {
+  const newCard = new Card({
+    object: item,
+    selector: elementsTemplate,
+    popupWithImage: () => popupWithImage.open(item),
+  });
+  const cardsElement = newCard.generateCard();
+  return cardsElement
+}
+
+const cardList = new Section({
+  items: initialCards,
+  renderer: newOneCard,
+},
+elementsSection
+);
+
+cardList.renderItem();
+
 
 //функция добавления карточиек в разметку
 function handleAddCardInARow (section, method, object) {
@@ -58,19 +87,20 @@ function handleAddCardInARow (section, method, object) {
 
 //открытие popup для редактирования данных профиля
 function openPopupProfile() {
-  openPopup (popupProfile);
-  formName.value = profileName.textContent;
-  formJob.value = profileJob.textContent;
+  const user = userInfo.getUserInfo();
+  user.name = formName.textContent;
+  user.job = formJob.textContent;
   formProfileValidation.resetValidation();
+  popupWithForm.open();
 };
 
 //закрытие popup редактирования профиля и сохранение внесенных данных
-function submitProfileForm (evt) {
-  evt.preventDefault();
-  profileName.textContent = formName.value;
-  profileJob.textContent = formJob.value;
-  closePopup(popupProfile);
-};
+// function submitProfileForm (evt) {
+//   evt.preventDefault();
+//   profileName.textContent = formName.value;
+//   profileJob.textContent = formJob.value;
+//   closePopup(popupProfile);
+// };
 
 //создание card на основании введенных данныъ из popup
 function addCard (evt) {
@@ -92,28 +122,16 @@ function addCard (evt) {
   closePopup(popupCards);
 };
 
-//закрытиe popup'a при нажатии на область вне окна popup'а и кнопку закрытия
-allPopups.forEach((popup) => {
-  popup.addEventListener ('click', (evt) => {
-    if (evt.target.classList.contains('popup__opened')) {
-      closePopup(popup);
-    };
-    if (evt.target.classList.contains('popup__close-button')) {
-      closePopup(popup);
-    };
-  });
-});
-
-
-
 //обработчик кноки сохранения в popup'е добавления card
-greateButton.addEventListener('click', () => openPopup(popupCards));
+greateButton.addEventListener('click', () => {
+  addCardPopup.open();
+});
 
 //обработчик кнопки открытия popup'а редактирования данных профиля
 editButton.addEventListener('click', openPopupProfile);
 
-//обработчик кнопки сохранения данных профиля
-formProfile.addEventListener('submit', submitProfileForm);
+// //обработчик кнопки сохранения данных профиля
+// formProfile.addEventListener('submit', submitProfileForm);
 
 //обработчик кнопки сохранения данных добовления card
 formAddCards.addEventListener('submit', addCard);
