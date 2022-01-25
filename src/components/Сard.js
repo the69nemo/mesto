@@ -1,5 +1,3 @@
-// import { openPopupImage } from "./other.js";
-
 class Card {
   constructor ({object, selector, popupWithImage}) {
     this._name = object.name;

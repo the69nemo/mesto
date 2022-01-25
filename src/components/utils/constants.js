@@ -1,3 +1,5 @@
+import { FormValidator } from "../FormValidator.js";
+
 const initialCards = [
   {
     name: 'Звездное небо',
@@ -58,31 +60,17 @@ const elementsTemplate = '.element-template';
 
 const elementTemplate = document.querySelector('.element-template').content;
 
-// function openPopup (popup) {
-//   popup.classList.add("popup__opened");
-//   document.addEventListener ('keydown', closePopupWithEsc);
-// };
+const dataValidation = ({
+  inputSelector: '.popup__form-input',
+  submitButtonSelector: '.popup__save-button',
+  inactiveButtonClass: 'popup__save-button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible'
+});
 
-//закрытие popup
-// function closePopup (popup) {
-//   popup.closest('.popup').classList.remove('popup__opened');
-//   document.removeEventListener ('keydown', closePopupWithEsc);
-// };
+const addFormValidation = new FormValidator(dataValidation, formAddCards);
+const formProfileValidation = new FormValidator(dataValidation, formProfile);
 
-// function openPopupImage (evt) {
-//   openPopup (popupImage);
-//   pictureInPopupImage.src = evt.target.src;
-//   figcaptionInPopupImage.textContent =  evt.target.alt;
-//   pictureInPopupImage.alt = evt.target.alt;
-// };
-
-// //функция для закрытия popup'а клавишей esc
-// function closePopupWithEsc (evt) {
-//   if (evt.key == "Escape") {
-//     const currentPopup = document.querySelector('.popup__opened');
-//     closePopup(currentPopup);
-//   };
-// };
 
 export {
   initialCards,
@@ -106,10 +94,9 @@ export {
   profileJob,
   elementsSection,
   elementTemplate,
-  elementsTemplate
-  // closePopup,
-  // closePopupWithEsc,
-  // openPopup,
-  // openPopupImage,
+  elementsTemplate,
+  dataValidation,
+  addFormValidation,
+  formProfileValidation,
 }
 
