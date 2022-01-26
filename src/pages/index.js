@@ -13,9 +13,12 @@ import {
   elementsSection,
   popupImage,
   elementsTemplate,
-  addFormValidation,
-  formProfileValidation,
-} from '../components/utils/constants.js';
+  dataValidation,
+  formProfile,
+  formAddCards,
+} from '../utils/constants.js';
+
+import { FormValidator } from "../components/FormValidator.js";
 
 import { Card } from '../components/Сard.js';
 
@@ -27,14 +30,17 @@ import { PopupWithForm } from '../components/PopupWithForm.js';
 
 import { UserInfo } from '../components/UserInfo.js';
 
+const addFormValidation = new FormValidator(dataValidation, formAddCards);
+const formProfileValidation = new FormValidator(dataValidation, formProfile);
+
 //Включаем валидацию форм
 addFormValidation.enableValidation();
 formProfileValidation.enableValidation();
 
-const submitProfileHandler = (inputValues) => userInfo.setUserInfo(inputValues);
+const handleSubmitProfile = (inputValues) => userInfo.setUserInfo(inputValues);
 
-const submitAddCardHandler = ({ nameCard, cardUrl }) => {
-  const card = newOneCard({
+const handleSubmitAddCard = ({ nameCard, cardUrl }) => {
+  const card = createCard({
     name: nameCard,
     link: cardUrl,
   });
@@ -42,20 +48,20 @@ const submitAddCardHandler = ({ nameCard, cardUrl }) => {
 }
 
 const userInfo = new UserInfo({
-  selectorName: profileName,
-  selectorJob: profileJob,
+  userName: profileName,
+  userJob: profileJob,
 });
 
-const addCardPopup = new PopupWithForm(popupCards, submitAddCardHandler);
+const addCardPopup = new PopupWithForm(popupCards, handleSubmitAddCard);
 const popupWithImage = new PopupWithImage(popupImage);
-const editProfilePopup = new PopupWithForm(popupProfile, submitProfileHandler)
+const editProfilePopup = new PopupWithForm(popupProfile, handleSubmitProfile)
 
 
-const newOneCard = (item) => {
+const createCard = (item) => {
   const newCard = new Card({
     object: item,
     selector: elementsTemplate,
-    popupWithImage: () => popupWithImage.open(item),
+    handleCardClick: () => popupWithImage.open(item),
   });
   const cardsElement = newCard.generateCard();
   return cardsElement
@@ -63,7 +69,7 @@ const newOneCard = (item) => {
 
 const cardList = new Section({
   items: initialCards.reverse(),
-  renderer: newOneCard,
+  renderer: createCard,
 },
 elementsSection
 );

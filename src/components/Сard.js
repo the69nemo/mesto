@@ -1,9 +1,9 @@
 class Card {
-  constructor ({object, selector, popupWithImage}) {
+  constructor ({object, selector, handleCardClick}) {
     this._name = object.name;
     this._link = object.link;
     this._selector = selector;
-    this._popup = popupWithImage;
+    this._handleCardClick = handleCardClick;
   }
 
   _getTemplate() {
@@ -11,6 +11,8 @@ class Card {
     const cardsElement = elementTemplate.cloneNode(true);
     this._trash = cardsElement.querySelector('.element__trash-box-button');
     this._like = cardsElement.querySelector('.element__button');
+    this._image = cardsElement.querySelector('.element__image');
+    this._title = cardsElement.querySelector('.element__title');
 
     return cardsElement;
   }
@@ -24,8 +26,8 @@ class Card {
       evt.target.classList.toggle('element__button_active');
     });
 
-    this._element.querySelector('.element__image').addEventListener('click', () => {
-      this._popup();
+    this._image.addEventListener('click', () => {
+      this._handleCardClick();
     });
   }
 
@@ -33,9 +35,9 @@ class Card {
     this._element = this._getTemplate();
     this._addListeners();
 
-    this._element.querySelector('.element__title').textContent = this._name;
-    this._element.querySelector('.element__image').src = this._link;
-    this._element.querySelector('.element__image').alt = this._name;
+    this._title.textContent = this._name;
+    this._image.src = this._link;
+    this._image.alt = this._name;
 
     return this._element;
   }

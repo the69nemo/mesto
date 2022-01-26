@@ -1,5 +1,3 @@
-import { FormValidator } from "../FormValidator.js";
-
 const initialCards = [
   {
     name: 'Звездное небо',
@@ -68,8 +66,7 @@ const dataValidation = ({
   errorClass: 'popup__error_visible'
 });
 
-const addFormValidation = new FormValidator(dataValidation, formAddCards);
-const formProfileValidation = new FormValidator(dataValidation, formProfile);
+
 
 
 export {
@@ -96,7 +93,5 @@ export {
   elementTemplate,
   elementsTemplate,
   dataValidation,
-  addFormValidation,
-  formProfileValidation,
 }
 
