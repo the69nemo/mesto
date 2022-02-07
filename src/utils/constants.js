@@ -37,6 +37,12 @@ const pictureInPopupImage = popupImages.querySelector('.popup__picture');
 const figcaptionInPopupImage = popupImages.querySelector('.popup__figcaption');
 const allPopups = document.querySelectorAll('.popup');
 const addCardButton = popupCard.querySelector('.popup__save-button');
+const popupAvatar = document.querySelector('.popup_avatar');
+const avatarOverlay = document.querySelector('.profile__avatar-overlay');
+const avatarSaveButton = popupAvatar.querySelector('.popup__save-button');
+const popupConfirmSelector = '.popup_confirm';
+const popupConfirm = document.querySelector(popupConfirmSelector);
+const popupConfirmButton = popupConfirm.querySelector('.popup__save-button');
 
 // ищем формы
 const formProfiles = ".profileContent";
@@ -46,6 +52,9 @@ const formName = document.querySelector(".popup__form-name");
 const formJob = document.querySelector(".popup__form-job");
 const cardName = document.querySelector(".popup__form-card-name");
 const cardUrl = document.querySelector(".popup__form-card-url");
+const formAvatar = document.querySelector('.avatarContent');
+
+const avatarImg = document.querySelector('.profile__avatar')
 
 // ищем значение имени и профессии из профиля
 const profileName = document.querySelector(".profile__name");
@@ -93,5 +102,12 @@ export {
   elementTemplate,
   elementsTemplate,
   dataValidation,
+  popupAvatar,
+  formAvatar,
+  avatarOverlay,
+  avatarSaveButton,
+  popupConfirmSelector,
+  popupConfirmButton,
+  avatarImg,
 }
 

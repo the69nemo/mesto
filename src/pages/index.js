@@ -1,7 +1,7 @@
 import './index.css';
 
 import {
-  initialCards,
+  // initialCards,
   editButton,
   popupProfile,
   popupCards,
@@ -16,11 +16,18 @@ import {
   dataValidation,
   formProfile,
   formAddCards,
+  popupAvatar,
+  formAvatar,
+  avatarOverlay,
+  avatarSaveButton,
+  popupConfirmSelector,
+  popupConfirmButton,
+  avatarImg,
 } from '../utils/constants.js';
 
 import { FormValidator } from "../components/FormValidator.js";
 
-import { Card } from '../components/Сard.js';
+import { Card } from '../components/Card.js';
 
 import { Section } from '../components/Section.js';
 
@@ -30,51 +37,135 @@ import { PopupWithForm } from '../components/PopupWithForm.js';
 
 import { UserInfo } from '../components/UserInfo.js';
 
+import { Api } from '../components/Api';
+
+import { PopupWithConfirm } from '../components/PopupWithConfirm';
+
 const addFormValidation = new FormValidator(dataValidation, formAddCards);
 const formProfileValidation = new FormValidator(dataValidation, formProfile);
+const formChageAvatarValidation = new FormValidator(dataValidation, formAvatar)
 
 //Включаем валидацию форм
 addFormValidation.enableValidation();
 formProfileValidation.enableValidation();
+formChageAvatarValidation.enableValidation();
 
-const handleSubmitProfile = (inputValues) => userInfo.setUserInfo(inputValues);
+const api = new Api ({
+  url: 'https://mesto.nomoreparties.co/v1/cohort-35',
+  headers: {
+    authorization: '8994131c-f4f1-45cc-a5e7-8627a23e5031',
+    'Content-Type': 'application/json'
+  }
+});
 
-const handleSubmitAddCard = ({ nameCard, cardUrl }) => {
-  const card = createCard({
-    name: nameCard,
-    link: cardUrl,
-  });
-  cardList.addItem(card);
+const emptyContainer = {};
+
+const handleSubmitProfile = ({userName, userJob}) =>
+  api.editProfileFromApi({
+      name: userName,
+      about: userJob
+    })
+    .then(() => {
+      emptyContainer.userInfo.setUserInfo({userName, userJob})
+    })
+    .catch((err) => console.log(`Ошибка ${err}`));
+
+const handleSubmitAddCard = ({ nameCard, cardUrl }) =>
+    api.postNewCardToServer({
+        name: nameCard,
+        link: cardUrl,
+      })
+    .then((card) => {
+      emptyContainer.section.addItem(card)
+    })
+    .catch((err) => console.log(err));
+
+const handleSubmitCardDelete = () => {
+  const cardObject = document.querySelector(`#card${emptyContainer.cardId}`);
+  return api.deleteCardFromServer(emptyContainer.cardId)
+      .then(() => {
+        cardObject.remove();
+      })
+      .catch((err) => console.log(`Ошибка ${err}`))
+};
+
+const handleCardDelete = (cardId) => {
+  emptyContainer.cardId = cardId;
+  popupWithConfirm.open();
 }
 
-const userInfo = new UserInfo({
-  userName: profileName,
-  userJob: profileJob,
-});
+const handleSubmitChangeAvatar = ({ newAvatarLink }) =>
+  api.patchAvatarFromApi(newAvatarLink)
+    .then((user) => {
+      emptyContainer.userInfo.setUserInfo({ avatar: user.avatar })
+    })
+    .catch((err) => console.log(`Ошибка со сменой аватара ${err}`));
+
+const handleCardLike = (cardId) =>
+  api.putLikesOnCardFromApi(cardId)
+    .catch((err) => console.log(`Ошибка с простановкой лайков ${err}`));
+
+const handleCardDeleteLike = (cardId) =>
+  api.deleteLikesOnCardFromApi(cardId)
+    .catch((err) => console.log(`Ошибка с удалением лайков ${err}`));
+
 
 const addCardPopup = new PopupWithForm(popupCards, handleSubmitAddCard);
 const popupWithImage = new PopupWithImage(popupImage);
-const editProfilePopup = new PopupWithForm(popupProfile, handleSubmitProfile)
+const editProfilePopup = new PopupWithForm(popupProfile, handleSubmitProfile);
+const popupWithChangeAvatar = new PopupWithForm ('.popup_avatar', handleSubmitChangeAvatar);
+const popupWithConfirm = new PopupWithConfirm (popupConfirmSelector, popupConfirmButton, handleSubmitCardDelete);
 
-
-const createCard = (item) => {
-  const newCard = new Card({
+const createCard = (item) =>
+  new Card({
     object: item,
     selector: elementsTemplate,
     handleCardClick: () => popupWithImage.open(item),
-  });
-  const cardsElement = newCard.generateCard();
-  return cardsElement
-}
+    userId: emptyContainer.userInfo.userId,
+    handleCardDelete: () => handleCardDelete(item._id),
+    handleCardLike: () => handleCardLike(item._id),
+    handleCardDeleteLike: () => handleCardDeleteLike(item._id)
+  }).generateCard();
 
-const cardList = new Section({
-  items: initialCards.reverse(),
-  renderer: createCard,
-},
-elementsSection
-);
+//   const cardsElement = newCard.generateCard();
+//   return cardsElement
+// }
 
-cardList.renderItem();
+// const cardList = new Section({
+//   items: [],
+//   renderer: (item) => {
+//     cardList.addItem(createCard(item));
+//   },
+// },
+// elementsSection);
+// cardList.renderItem();
+
+Promise.all([api.getUserInfoFromApi(), api.getCardsFromApi()])
+  .then(([user, cards]) => {
+    emptyContainer.userInfo = new UserInfo({
+      userName: profileName,
+      userJob: profileJob,
+      avatar: avatarImg,
+      userId: user._id
+    });
+    console.log(emptyContainer.userInfo);
+    emptyContainer.userInfo.setUserInfo({
+      userName: user.name,
+      userJob: user.about,
+      userAvatar: user.avatar
+    });
+    console.log(emptyContainer.userInfo);
+
+    emptyContainer.section = new Section({
+      items: cards.reverse(),
+      renderer: createCard,
+      userId: emptyContainer.userInfo.userId
+    }, elementsSection);
+    console.log(emptyContainer.section);
+
+    emptyContainer.section.renderItem();
+  })
+  .catch((err) => console.log(`Ошибка в создании карточек: ${err}`));
 
 //обработчик кноки сохранения в popup'е добавления card
 greateButton.addEventListener('click', () => {
@@ -84,9 +175,14 @@ greateButton.addEventListener('click', () => {
 
 //обработчик кнопки открытия popup'а редактирования данных профиля
 editButton.addEventListener('click', () => {
-  const user = userInfo.getUserInfo();
+  const user = emptyContainer.userInfo.getUserInfo();
   formName.value = user.name;
-  formJob.value = user.job;
+  formJob.value = user.about;
   formProfileValidation.resetValidation();
   editProfilePopup.open();
 });
+
+avatarOverlay.addEventListener('click', () => {
+  formChageAvatarValidation.resetValidation();
+  popupWithChangeAvatar.open();
+})

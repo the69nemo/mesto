@@ -1,4 +1,5 @@
 .element__trash-box-button{
+  visibility: visible;
   background: url(../../../images/trash_box.svg) no-repeat;
   background-position: center;
   height: 19px;
