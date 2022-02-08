@@ -1,13 +1,13 @@
 import { Popup } from "./Popup.js";
 
-class PopupWithConfirm extends Popup {
+class PopupWithConfirmation extends Popup {
   constructor(popupSelector, confirmButton, submitHandler) {
     super(popupSelector);
     this._confirmButton = confirmButton;
     this._submitHandler = submitHandler;
   }
 
-  _submitPopup() {
+  _submitPopup = () => {
     this._confirmButton.textContent = "Удаление...";
     this._submitHandler()
       .then(() => this.close())
@@ -29,4 +29,4 @@ class PopupWithConfirm extends Popup {
   }
 }
 
-export { PopupWithConfirm };
+export { PopupWithConfirmation };

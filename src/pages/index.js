@@ -1,7 +1,6 @@
 import './index.css';
 
 import {
-  // initialCards,
   editButton,
   popupProfile,
   popupCards,
@@ -16,10 +15,9 @@ import {
   dataValidation,
   formProfile,
   formAddCards,
-  popupAvatar,
+  popupAvatarSelector,
   formAvatar,
   avatarOverlay,
-  avatarSaveButton,
   popupConfirmSelector,
   popupConfirmButton,
   avatarImg,
@@ -37,9 +35,9 @@ import { PopupWithForm } from '../components/PopupWithForm.js';
 
 import { UserInfo } from '../components/UserInfo.js';
 
-import { Api } from '../components/Api';
+import { Api } from '../components/Api.js';
 
-import { PopupWithConfirm } from '../components/PopupWithConfirm';
+import { PopupWithConfirmation } from '../components/PopupWithConfirmation.js';
 
 const addFormValidation = new FormValidator(dataValidation, formAddCards);
 const formProfileValidation = new FormValidator(dataValidation, formProfile);
@@ -68,7 +66,7 @@ const handleSubmitProfile = ({ newName, newJob }) =>
     .then(() => {
       emptyContainer.userInfo.setUserInfo({ newName, newJob })
     })
-    .catch((err) => console.log(`Ошибка ${err}`));
+    .catch((err) => console.log(`Ошибка связанная с изменениями данных профиля: ${err}`));
 
 const handleSubmitAddCard = ({ nameCard, cardUrl }) =>
     api.postNewCardToServer({
@@ -78,7 +76,7 @@ const handleSubmitAddCard = ({ nameCard, cardUrl }) =>
     .then((card) => {
       emptyContainer.section.addItem(card)
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.log(`Ошибка связанная с добавление карточки: ${err}`));
 
 const handleSubmitCardDelete = () => {
   const cardObject = document.querySelector(`#card${emptyContainer.cardId}`);
@@ -86,7 +84,7 @@ const handleSubmitCardDelete = () => {
       .then(() => {
         cardObject.remove();
       })
-      .catch((err) => console.log(`Ошибка ${err}`))
+      .catch((err) => console.log(`Ошибка связанная с удалением карточки: ${err}`))
 };
 
 const handleCardDelete = (cardId) => {
@@ -98,48 +96,34 @@ const handleSubmitChangeAvatar = ({ avatarUrl }) =>
   api.patchAvatarFromApi(avatarUrl)
     .then((user) => {
       emptyContainer.userInfo.setUserInfo({ newAvatar: user.avatar })
-      console.log(user.avatar)
     })
-    .catch((err) => console.log(`Ошибка со сменой аватара ${err}`));
+    .catch((err) => console.log(`Ошибка связанная со сменой аватара: ${err}`));
 
 const handleCardLike = (cardId) =>
   api.putLikesOnCardFromApi(cardId)
-    .catch((err) => console.log(`Ошибка с простановкой лайков ${err}`));
+    .catch((err) => console.log(`Ошибка связанная с простановкой лайков: ${err}`));
 
 const handleCardDeleteLike = (cardId) =>
   api.deleteLikesOnCardFromApi(cardId)
-    .catch((err) => console.log(`Ошибка с удалением лайков ${err}`));
+    .catch((err) => console.log(`Ошибка связанная с удалением лайков: ${err}`));
 
 
 const addCardPopup = new PopupWithForm(popupCards, handleSubmitAddCard);
 const popupWithImage = new PopupWithImage(popupImage);
 const editProfilePopup = new PopupWithForm(popupProfile, handleSubmitProfile);
-const popupWithChangeAvatar = new PopupWithForm('.popup_avatar', handleSubmitChangeAvatar);
-const popupWithConfirm = new PopupWithConfirm(popupConfirmSelector, popupConfirmButton, handleSubmitCardDelete);
+const popupWithChangeAvatar = new PopupWithForm(popupAvatarSelector, handleSubmitChangeAvatar);
+const popupWithConfirm = new PopupWithConfirmation(popupConfirmSelector, popupConfirmButton, handleSubmitCardDelete);
 
 const createCard = (item) =>
   new Card({
-    object: item,
+    card: item,
     selector: elementsTemplate,
     handleCardClick: () => popupWithImage.open(item),
     userId: emptyContainer.userInfo.userId,
     handleCardDelete: () => handleCardDelete(item._id),
     handleCardLike: () => handleCardLike(item._id),
-    handleCardDeleteLike: () => handleCardDeleteLike(item._id)
+    handleCardDeleteLike: () => handleCardDeleteLike(item._id),
   }).generateCard();
-
-//   const cardsElement = newCard.generateCard();
-//   return cardsElement
-// }
-
-// const cardList = new Section({
-//   items: [],
-//   renderer: (item) => {
-//     cardList.addItem(createCard(item));
-//   },
-// },
-// elementsSection);
-// cardList.renderItem();
 
 Promise.all([api.getUserInfoFromApi(), api.getCardsFromApi()])
   .then(([user, cards]) => {
@@ -149,17 +133,12 @@ Promise.all([api.getUserInfoFromApi(), api.getCardsFromApi()])
       avatar: avatarImg,
       userId: user._id
     });
-    console.log(emptyContainer.userInfo);
-
-
 
     emptyContainer.userInfo.setUserInfo({
       newName: user.name,
       newJob: user.about,
       newAvatar: user.avatar,
     });
-
-    console.log(emptyContainer.userInfo)
 
     emptyContainer.section = new Section({
       items: cards.reverse(),

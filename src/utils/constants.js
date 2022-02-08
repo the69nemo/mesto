@@ -1,30 +1,3 @@
-const initialCards = [
-  {
-    name: 'Звездное небо',
-    link: 'https://images.unsplash.com/photo-1638091990389-7f4d9bbe8d81?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1974&q=80'
-  },
-  {
-    name: 'Горное озеро',
-    link: 'https://images.unsplash.com/photo-1576521403898-3a103a0f1e31?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1974&q=80'
-  },
-  {
-    name: 'Песчаные дюны',
-    link: 'https://images.unsplash.com/photo-1638024510305-c36fcc0bf3b1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1645&q=80'
-  },
-  {
-    name: 'Серпантин',
-    link: 'https://images.unsplash.com/photo-1637954975855-bef3ec525549?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80'
-  },
-  {
-    name: 'Зимняя дорога',
-    link: 'https://images.unsplash.com/photo-1637983927552-812e9871191e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80'
-  },
-  {
-    name: 'Пик в облаках',
-    link: 'https://images.unsplash.com/photo-1637919177060-16ccc91fce1b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80'
-  }
-];
-
 // ищем popup элементы
 const editButton = document.querySelector(".profile__btn");
 const popupProfile = ".popup_profile";
@@ -38,6 +11,7 @@ const figcaptionInPopupImage = popupImages.querySelector('.popup__figcaption');
 const allPopups = document.querySelectorAll('.popup');
 const addCardButton = popupCard.querySelector('.popup__save-button');
 const popupAvatar = document.querySelector('.popup_avatar');
+const popupAvatarSelector = '.popup_avatar';
 const avatarOverlay = document.querySelector('.profile__avatar-overlay');
 const avatarSaveButton = popupAvatar.querySelector('.popup__save-button');
 const popupConfirmSelector = '.popup_confirm';
@@ -79,7 +53,6 @@ const dataValidation = ({
 
 
 export {
-  initialCards,
   editButton,
   popupProfile,
   popupCards,
@@ -102,7 +75,7 @@ export {
   elementTemplate,
   elementsTemplate,
   dataValidation,
-  popupAvatar,
+  popupAvatarSelector,
   formAvatar,
   avatarOverlay,
   avatarSaveButton,
