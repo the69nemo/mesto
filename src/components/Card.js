@@ -11,7 +11,7 @@ class Card {
     this._name = object.name;
     this._link = object.link;
     this._likes = object.likes;
-    this._cardId = object._id;
+    this._id = object._id;
     this._userId = userId;
     this._ownerId = object.owner._id;
     this._selector = selector;
@@ -69,7 +69,7 @@ class Card {
     this._image.src = this._link;
     this._image.alt = this._name;
     this._likeNumber.textContent = this._likes.length;
-    this._cardsElement.id = 'card' + this._cardId;
+    this._cardsElement.id = 'card' +  this._id;
 
     this._addListeners();
 

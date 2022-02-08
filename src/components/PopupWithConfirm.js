@@ -10,7 +10,7 @@ class PopupWithConfirm extends Popup {
   _submitPopup() {
     this._confirmButton.textContent = "Удаление...";
     this._submitHandler()
-      .then(() => this.close)
+      .then(() => this.close())
       .finally(() => {
         setTimeout(() => {
           this._confirmButton.textContent = "Да";

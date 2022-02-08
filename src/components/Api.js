@@ -28,11 +28,11 @@ class Api {
 
   editProfileFromApi (userInfo) {
     return fetch(`${this._url}/users/me`, {
-      method: 'PATCH',
+      method: "PATCH",
       headers: this._headers,
       body: JSON.stringify(userInfo),
     })
-    .then((res) => this._handleResponse(res));
+    .then((res) => this._handleResponse(res))
   }
 
   postNewCardToServer(card) {

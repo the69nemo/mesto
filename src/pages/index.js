@@ -97,7 +97,6 @@ const handleCardDelete = (cardId) => {
 const handleSubmitChangeAvatar = ({ newAvatarLink }) =>
   api.patchAvatarFromApi(newAvatarLink)
     .then((user) => {
-
       emptyContainer.userInfo.setUserInfo({ newAvatar: user.avatar })
       console.log(user.avatar)
     })
@@ -150,12 +149,17 @@ Promise.all([api.getUserInfoFromApi(), api.getCardsFromApi()])
       avatar: avatarImg,
       userId: user._id
     });
+    console.log(emptyContainer.userInfo);
+
+
 
     emptyContainer.userInfo.setUserInfo({
       newName: user.name,
       newJob: user.about,
       newAvatar: user.avatar,
     });
+
+    console.log(emptyContainer.userInfo)
 
     emptyContainer.section = new Section({
       items: cards.reverse(),

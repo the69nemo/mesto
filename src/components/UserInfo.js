@@ -14,9 +14,9 @@ class UserInfo {
   }
 
   setUserInfo ({ newName, newJob, newAvatar }) {
-    newName ? (this._name.textContent = newName) : this._name.textContent;
-    newJob ? (this._job.textContent = newJob) : this._job.textContent;
-    newAvatar ? (this._avatar.src = newAvatar) : this._avatar.src;
+    this._name.textContent = newName;
+    this._job.textContent = newJob;
+    this._avatar.src = newAvatar;
   }
 }
 
