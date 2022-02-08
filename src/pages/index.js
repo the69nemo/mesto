@@ -94,8 +94,8 @@ const handleCardDelete = (cardId) => {
   popupWithConfirm.open();
 }
 
-const handleSubmitChangeAvatar = ({ newAvatarLink }) =>
-  api.patchAvatarFromApi(newAvatarLink)
+const handleSubmitChangeAvatar = ({ avatarUrl }) =>
+  api.patchAvatarFromApi(avatarUrl)
     .then((user) => {
       emptyContainer.userInfo.setUserInfo({ newAvatar: user.avatar })
       console.log(user.avatar)
