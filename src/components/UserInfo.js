@@ -1,5 +1,5 @@
 class UserInfo {
-  constructor ({userName, userJob, avatar, userId}) {
+  constructor ({ userName, userJob, avatar, userId }) {
     this._name = userName;
     this._job = userJob;
     this._avatar = avatar;
@@ -7,17 +7,16 @@ class UserInfo {
   }
 
   getUserInfo () {
-    const user = {
+    return {
      name: this._name.textContent,
-     job: this._job.textContent,
+     about: this._job.textContent,
     };
-    return user
   }
 
-  setUserInfo ({ userName, userJob, userAvatar }) {
-    userName ? (this._name.textContent = userName) : this._name.textContent;
-    userJob ? (this._job.textContent = userJob) : this._job.textContent;
-    userAvatar ? (this._avatar.src = userAvatar) : this._avatar.src;
+  setUserInfo ({ newName, newJob, newAvatar }) {
+    newName ? (this._name.textContent = newName) : this._name.textContent;
+    newJob ? (this._job.textContent = newJob) : this._job.textContent;
+    newAvatar ? (this._avatar.src = newAvatar) : this._avatar.src;
   }
 }
 

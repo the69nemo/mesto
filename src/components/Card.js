@@ -22,19 +22,17 @@ class Card {
 
     this._template =  document.querySelector(this._selector).content;
     this._cardsElement = this._template.querySelector('.element').cloneNode(true);
-    this._trash = this.cardsElement.querySelector('.element__trash-box-button');
-    this._like = this.cardsElement.querySelector('.element__button');
-    this._image = this.cardsElement.querySelector('.element__image');
-    this._title = this.cardsElement.querySelector('.element__title');
-    this._likeNumber = this.cardsElement.querySelector('.element__like-number');
+    this._trash = this._cardsElement.querySelector('.element__trash-box-button');
+    this._like = this._cardsElement.querySelector('.element__button');
+    this._image = this._cardsElement.querySelector('.element__image');
+    this._title = this._cardsElement.querySelector('.element__title');
+    this._likeNumber = this._cardsElement.querySelector('.element__like-number');
 
-    this._isLike = this._likes.find((like) => {
-      like._id === this._userId;
-    });
+    this._isLike = this._likes.find((like) => like._id === this._userId);
+
     if (this._ownerId != this._userId) {
       this._trash.classList.add('element__trash-box-button_hidden')
     }
-
   }
 
   _handleLike() {

@@ -55,18 +55,18 @@ const api = new Api ({
   headers: {
     authorization: '8994131c-f4f1-45cc-a5e7-8627a23e5031',
     'Content-Type': 'application/json'
-  }
+  },
 });
 
 const emptyContainer = {};
 
-const handleSubmitProfile = ({userName, userJob}) =>
+const handleSubmitProfile = ({ newName, newJob }) =>
   api.editProfileFromApi({
-      name: userName,
-      about: userJob
+      name: newName,
+      about: newJob
     })
     .then(() => {
-      emptyContainer.userInfo.setUserInfo({userName, userJob})
+      emptyContainer.userInfo.setUserInfo({ newName, newJob })
     })
     .catch((err) => console.log(`Ошибка ${err}`));
 
@@ -97,7 +97,9 @@ const handleCardDelete = (cardId) => {
 const handleSubmitChangeAvatar = ({ newAvatarLink }) =>
   api.patchAvatarFromApi(newAvatarLink)
     .then((user) => {
-      emptyContainer.userInfo.setUserInfo({ avatar: user.avatar })
+
+      emptyContainer.userInfo.setUserInfo({ newAvatar: user.avatar })
+      console.log(user.avatar)
     })
     .catch((err) => console.log(`Ошибка со сменой аватара ${err}`));
 
@@ -113,8 +115,8 @@ const handleCardDeleteLike = (cardId) =>
 const addCardPopup = new PopupWithForm(popupCards, handleSubmitAddCard);
 const popupWithImage = new PopupWithImage(popupImage);
 const editProfilePopup = new PopupWithForm(popupProfile, handleSubmitProfile);
-const popupWithChangeAvatar = new PopupWithForm ('.popup_avatar', handleSubmitChangeAvatar);
-const popupWithConfirm = new PopupWithConfirm (popupConfirmSelector, popupConfirmButton, handleSubmitCardDelete);
+const popupWithChangeAvatar = new PopupWithForm('.popup_avatar', handleSubmitChangeAvatar);
+const popupWithConfirm = new PopupWithConfirm(popupConfirmSelector, popupConfirmButton, handleSubmitCardDelete);
 
 const createCard = (item) =>
   new Card({
@@ -148,20 +150,19 @@ Promise.all([api.getUserInfoFromApi(), api.getCardsFromApi()])
       avatar: avatarImg,
       userId: user._id
     });
-    console.log(emptyContainer.userInfo);
+
     emptyContainer.userInfo.setUserInfo({
-      userName: user.name,
-      userJob: user.about,
-      userAvatar: user.avatar
+      newName: user.name,
+      newJob: user.about,
+      newAvatar: user.avatar,
     });
-    console.log(emptyContainer.userInfo);
 
     emptyContainer.section = new Section({
       items: cards.reverse(),
       renderer: createCard,
       userId: emptyContainer.userInfo.userId
     }, elementsSection);
-    console.log(emptyContainer.section);
+
 
     emptyContainer.section.renderItem();
   })

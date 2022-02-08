@@ -1,15 +1,15 @@
 import { Popup } from "./Popup.js";
 
 class PopupWithConfirm extends Popup {
-  constructor(popupSelector, confirmButton, submitForm) {
+  constructor(popupSelector, confirmButton, submitHandler) {
     super(popupSelector);
     this._confirmButton = confirmButton;
-    this._submitForm = submitForm;
+    this._submitHandler = submitHandler;
   }
 
   _submitPopup() {
     this._confirmButton.textContent = "Удаление...";
-    this._submitForm()
+    this._submitHandler()
       .then(() => this.close)
       .finally(() => {
         setTimeout(() => {

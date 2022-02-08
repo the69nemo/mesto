@@ -22,7 +22,7 @@ class PopupWithForm extends Popup {
     evt.preventDefault();
     this._submitButton.textContent = 'Сохранение...';
     this._submit(this._getInputValues())
-      .then(() => this._close)
+      .then(() => this.close())
       .finally(() => {
         setTimeout(() => {
           this._submitButton.textContent = 'Сохранить';

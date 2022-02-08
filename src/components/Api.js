@@ -30,7 +30,7 @@ class Api {
     return fetch(`${this._url}/users/me`, {
       method: 'PATCH',
       headers: this._headers,
-      body: JSON.stringify(userInfo)
+      body: JSON.stringify(userInfo),
     })
     .then((res) => this._handleResponse(res));
   }
@@ -70,9 +70,9 @@ class Api {
 
   patchAvatarFromApi (newAvatarLink) {
     return fetch(`${this._url}/users/me/avatar`, {
-      method: 'POST',
+      method: 'PATCH',
       headers: this._headers,
-      body: JSON.stringify({avatar: newAvatarLink})
+      body: JSON.stringify({ avatar: newAvatarLink }),
     })
     .then ((res) => this._handleResponse(res));
   }
